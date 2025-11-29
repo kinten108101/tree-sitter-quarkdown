@@ -1,7 +1,7 @@
 use std::env::args;
 
 use tree_sitter::{InputEdit, Point};
-use tree_sitter_md::{MarkdownParser, MarkdownTree};
+use tree_sitter_md::{QuarkdownParser, QuarkdownTree};
 
 fn main() {
     let filename = args()
@@ -10,7 +10,7 @@ fn main() {
         .unwrap_or("README.md".to_string());
     let source = std::fs::read(filename).unwrap();
 
-    let mut parser = MarkdownParser::default();
+    let mut parser = QuarkdownParser::default();
     let mut tree = parser.parse(&source, None).unwrap();
     tree.edit(&InputEdit {
         start_byte: 0,
@@ -23,6 +23,6 @@ fn main() {
     reparse(&mut parser, &source[1..], tree);
 }
 
-fn reparse(parser: &mut MarkdownParser, source: &[u8], old_tree: MarkdownTree) {
+fn reparse(parser: &mut QuarkdownParser, source: &[u8], old_tree: QuarkdownTree) {
     parser.parse(source, Some(&old_tree)).unwrap();
 }

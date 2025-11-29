@@ -1,7 +1,7 @@
 # Contributing
 
 All contributions are welcome. Specifically, if you found a bug or have a
-suggestion for a new feature or markdown extension, you can always open an
+suggestion for a new feature or quarkdown extension, you can always open an
 [issue] or [pull request].
 
 ## Issues
@@ -25,8 +25,8 @@ Please refer to the [tree-sitter spec] for more details on how to write a tree-
 sitter grammar.
 
 This parse is split into two grammars. One for block structure, which can be
-found in the `tree-sitter-markdown` folder, and one for inline structure, which
-can be found in the `tree-sitter-markdown-inline` folder. Components that are
+found in the `tree-sitter-quarkdown` folder, and one for inline structure, which
+can be found in the `tree-sitter-quarkdown-inline` folder. Components that are
 parts of either grammar can be found in the `common` folder.
 
 For either of the grammar the most important files are the `grammar.js` which
@@ -52,8 +52,8 @@ I will happily accept any pull requests.
 
 Before submitting any code please check the following:
 
-* You ran `tree-sitter generate` in the `tree-sitter-markdown` or
-  `tree-sitter-markdown-inline` directories respectively after modifying any
+* You ran `tree-sitter generate` in the `tree-sitter-quarkdown` or
+  `tree-sitter-quarkdown-inline` directories respectively after modifying any
   `grammar.js` file.
 * When running `tree-sitter test` only the cases defined in `failing.txt` or
   `extension_<>.txt` for not activated extensions fail for **both** grammars.
@@ -72,8 +72,8 @@ ALL_EXTENSIONS=1 node scripts/build.js
 node scripts/test.js
 ```
 
-[issue]: https://github.com/tree-sitter-grammars/tree-sitter-markdown/issues/new
-[pull request]: https://github.com/tree-sitter-grammars/tree-sitter-markdown/compare
+[issue]: https://github.com/kinten108101/tree-sitter-quarkdown/issues/new
+[pull request]: https://github.com/kinten108101/tree-sitter-quarkdown/compare
 [gfm]: https://github.github.com/gfm/
 [commonmark]: https://spec.commonmark.org/
 [tree-sitter spec]: https://tree-sitter.github.io/tree-sitter/

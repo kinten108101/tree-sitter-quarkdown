@@ -1,10 +1,10 @@
-//! This crate provides Markdown language support for the [tree-sitter][] parsing library.
+//! This crate provides Quarkdown language support for the [tree-sitter][] parsing library.
 //!
-//! It contains two grammars: [`LANGUAGE`] to parse the block structure of markdown documents and
+//! It contains two grammars: [`LANGUAGE`] to parse the block structure of quarkdown documents and
 //! [`INLINE_LANGUAGE`] to parse inline content.
 //!
-//! It also supplies [`MarkdownParser`] as a convenience wrapper around the two grammars.
-//! [`MarkdownParser::parse`] returns a [`MarkdownTree`] instread of a [`Tree`][Tree]. This struct
+//! It also supplies [`QuarkdownParser`] as a convenience wrapper around the two grammars.
+//! [`QuarkdownParser::parse`] returns a [`QuarkdownTree`] instread of a [`Tree`][Tree]. This struct
 //! contains a block tree and an inline tree for each node in the block tree that has inline
 //! content.
 //!
@@ -17,43 +17,43 @@
 use tree_sitter_language::LanguageFn;
 
 extern "C" {
-    fn tree_sitter_markdown() -> *const ();
-    fn tree_sitter_markdown_inline() -> *const ();
+    fn tree_sitter_quarkdown() -> *const ();
+    fn tree_sitter_quarkdown_inline() -> *const ();
 }
 
 /// The tree-sitter [`LanguageFn`][LanguageFn] for the block grammar.
-pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_markdown) };
+pub const LANGUAGE: LanguageFn = unsafe { LanguageFn::from_raw(tree_sitter_quarkdown) };
 
 /// The tree-sitter [`LanguageFn`][LanguageFn] for the inline grammar.
 pub const INLINE_LANGUAGE: LanguageFn =
-    unsafe { LanguageFn::from_raw(tree_sitter_markdown_inline) };
+    unsafe { LanguageFn::from_raw(tree_sitter_quarkdown_inline) };
 
 /// The syntax highlighting queries for the block grammar.
 pub const HIGHLIGHT_QUERY_BLOCK: &str =
-    include_str!("../../tree-sitter-markdown/queries/highlights.scm");
+    include_str!("../../tree-sitter-quarkdown/queries/highlights.scm");
 
 /// The language injection queries for the block grammar.
 pub const INJECTION_QUERY_BLOCK: &str =
-    include_str!("../../tree-sitter-markdown/queries/injections.scm");
+    include_str!("../../tree-sitter-quarkdown/queries/injections.scm");
 
 /// The syntax highlighting queries for the inline grammar.
 pub const HIGHLIGHT_QUERY_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/queries/highlights.scm");
+    include_str!("../../tree-sitter-quarkdown-inline/queries/highlights.scm");
 
 /// The language injection queries for the inline grammar.
 pub const INJECTION_QUERY_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/queries/injections.scm");
+    include_str!("../../tree-sitter-quarkdown-inline/queries/injections.scm");
 
 /// The content of the [`node-types.json`][] file for the block grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
-pub const NODE_TYPES_BLOCK: &str = include_str!("../../tree-sitter-markdown/src/node-types.json");
+pub const NODE_TYPES_BLOCK: &str = include_str!("../../tree-sitter-quarkdown/src/node-types.json");
 
 /// The content of the [`node-types.json`][] file for the inline grammar.
 ///
 /// [`node-types.json`]: https://tree-sitter.github.io/tree-sitter/using-parsers#static-node-types
 pub const NODE_TYPES_INLINE: &str =
-    include_str!("../../tree-sitter-markdown-inline/src/node-types.json");
+    include_str!("../../tree-sitter-quarkdown-inline/src/node-types.json");
 
 #[cfg(feature = "parser")]
 #[cfg_attr(docsrs, doc(cfg(feature = "parser")))]
@@ -72,7 +72,7 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&LANGUAGE.into())
-            .expect("Error loading Markdown block grammar");
+            .expect("Error loading Quarkdown block grammar");
     }
 
     #[test]
@@ -80,6 +80,6 @@ mod tests {
         let mut parser = tree_sitter::Parser::new();
         parser
             .set_language(&INLINE_LANGUAGE.into())
-            .expect("Error loading Markdown inline grammar");
+            .expect("Error loading Quarkdown inline grammar");
     }
 }

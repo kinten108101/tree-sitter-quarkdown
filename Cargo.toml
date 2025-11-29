@@ -1,25 +1,25 @@
 [package]
-name = "tree-sitter-md"
-description = "Markdown grammar for tree-sitter"
+name = "tree-sitter-qd"
+description = "Quarkdown grammar for tree-sitter"
 version = "0.5.1"
-authors = ["MDeiml"]
+authors = ["Kinten Le"]
 license = "MIT"
 readme = "README.md"
-keywords = ["incremental", "parsing", "tree-sitter", "markdown"]
+keywords = ["incremental", "parsing", "tree-sitter", "quarkdown"]
 categories = ["parsing", "text-editors"]
-repository = "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+repository = "https://github.com/kinten108101/tree-sitter-quarkdown"
 edition = "2021"
 autoexamples = false
 
 build = "bindings/rust/build.rs"
 include = [
   "bindings/rust/*",
-  "tree-sitter-markdown/src/*",
-  "tree-sitter-markdown-inline/src/*",
-  "tree-sitter-markdown/grammar.js",
-  "tree-sitter-markdown-inline/grammar.js",
-  "tree-sitter-markdown/queries/*",
-  "tree-sitter-markdown-inline/queries/*",
+  "tree-sitter-quarkdown/src/*",
+  "tree-sitter-quarkdown-inline/src/*",
+  "tree-sitter-quarkdown/grammar.js",
+  "tree-sitter-quarkdown-inline/grammar.js",
+  "tree-sitter-quarkdown/queries/*",
+  "tree-sitter-quarkdown-inline/queries/*",
   "common/grammar.js",
   "common/html_entities.json",
 ]

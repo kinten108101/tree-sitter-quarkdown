@@ -1,4 +1,4 @@
-module github.com/tree-sitter-grammars/tree-sitter-markdown
+module github.com/kinten108101/tree-sitter-quarkdown
 
 go 1.23
 

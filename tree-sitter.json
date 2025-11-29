@@ -4,36 +4,36 @@
     "license": "MIT",
     "authors": [
       {
-        "name": "MDeiml"
+        "name": "Kinten Le"
       }
     ],
-    "description": "Markdown grammar for tree-sitter",
+    "description": "Quarkdown grammar for tree-sitter",
     "links": {
-      "repository": "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+      "repository": "https://github.com/kinten108101/tree-sitter-quarkdown"
     }
   },
   "grammars": [
     {
-      "name": "markdown",
-      "scope": "text.markdown",
-      "path": "tree-sitter-markdown",
-      "injection-regex": "^(markdown|md)$",
+      "name": "quarkdown",
+      "scope": "text.quarkdown",
+      "path": "tree-sitter-quarkdown",
+      "injection-regex": "^(quarkdown|qd)$",
       "file-types": [
-        "md"
+        "qd"
       ],
-      "highlights": "tree-sitter-markdown/queries/highlights.scm",
-      "injections": "tree-sitter-markdown/queries/injections.scm",
+      "highlights": "tree-sitter-quarkdown/queries/highlights.scm",
+      "injections": "tree-sitter-quarkdown/queries/injections.scm",
       "external-files": [
         "common/common.js"
       ]
     },
     {
-      "name": "markdown_inline",
-      "camelcase": "MarkdownInline",
-      "scope": "text.markdown_inline",
-      "path": "tree-sitter-markdown-inline",
-      "highlights": "tree-sitter-markdown-inline/queries/highlights.scm",
-      "injections": "tree-sitter-markdown-inline/queries/injections.scm",
+      "name": "quarkdown_inline",
+      "camelcase": "QuarkdownInline",
+      "scope": "text.quarkdown_inline",
+      "path": "tree-sitter-quarkdown-inline",
+      "highlights": "tree-sitter-quarkdown-inline/queries/highlights.scm",
+      "injections": "tree-sitter-quarkdown-inline/queries/injections.scm",
       "external-files": [
         "common/common.js"
       ]

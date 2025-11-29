@@ -2,18 +2,18 @@
 import PackageDescription
 
 let package = Package(
-    name: "TreeSitterMarkdown",
+    name: "TreeSitterQuarkdown",
     platforms: [.macOS(.v10_13), .iOS(.v11)],
     products: [
-        .library(name: "TreeSitterMarkdown", targets: ["TreeSitterMarkdown", "TreeSitterMarkdownInline"]),
+        .library(name: "TreeSitterQuarkdown", targets: ["TreeSitterQuarkdown", "TreeSitterQuarkdownInline"]),
     ],
     dependencies: [
         .package(url: "https://github.com/ChimeHQ/SwiftTreeSitter", from: "0.8.0"),
     ],
     targets: [
         .target(
-            name: "TreeSitterMarkdown",
-            path: "tree-sitter-markdown",
+            name: "TreeSitterQuarkdown",
+            path: "tree-sitter-quarkdown",
             sources: [
                 "src/parser.c",
                 "src/scanner.c",
@@ -25,8 +25,8 @@ let package = Package(
             cSettings: [.headerSearchPath("src")]
         ),
         .target(
-            name: "TreeSitterMarkdownInline",
-            path: "tree-sitter-markdown-inline",
+            name: "TreeSitterQuarkdownInline",
+            path: "tree-sitter-quarkdown-inline",
             exclude: [
                 "test",
                 "grammar.js",
@@ -42,13 +42,13 @@ let package = Package(
             cSettings: [.headerSearchPath("src")]
         ),
         .testTarget(
-            name: "TreeSitterMarkdownTests",
+            name: "TreeSitterQuarkdownTests",
             dependencies: [
                 "SwiftTreeSitter",
-                "TreeSitterMarkdown",
-                "TreeSitterMarkdownInline",
+                "TreeSitterQuarkdown",
+                "TreeSitterQuarkdownInline",
             ],
-            path: "bindings/swift/TreeSitterMarkdownTests"
+            path: "bindings/swift/TreeSitterQuarkdownTests"
         )
     ],
     cLanguageStandard: .c11

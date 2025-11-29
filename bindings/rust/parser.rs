@@ -5,26 +5,26 @@ use tree_sitter::{InputEdit, Language, Node, Parser, Point, Range, Tree, TreeCur
 
 use crate::{INLINE_LANGUAGE, LANGUAGE};
 
-/// A parser that produces [`MarkdownTree`]s.
+/// A parser that produces [`QuarkdownTree`]s.
 ///
 /// This is a convenience wrapper around [`LANGUAGE`] and [`INLINE_LANGUAGE`].
-pub struct MarkdownParser {
+pub struct QuarkdownParser {
     parser: Parser,
     block_language: Language,
     inline_language: Language,
 }
 
-/// A stateful object for walking a [`MarkdownTree`] efficiently.
+/// A stateful object for walking a [`QuarkdownTree`] efficiently.
 ///
 /// This exposes the same methdos as [`TreeCursor`], but abstracts away the
-/// double block / inline structure of [`MarkdownTree`].
-pub struct MarkdownCursor<'a> {
-    markdown_tree: &'a MarkdownTree,
+/// double block / inline structure of [`QuarkdownTree`].
+pub struct QuarkdownCursor<'a> {
+    quarkdown_tree: &'a QuarkdownTree,
     block_cursor: TreeCursor<'a>,
     inline_cursor: Option<TreeCursor<'a>>,
 }
 
-impl<'a> MarkdownCursor<'a> {
+impl<'a> QuarkdownCursor<'a> {
     /// Get the cursor's current [`Node`].
     pub fn node(&self) -> Node<'a> {
         match &self.inline_cursor {
@@ -69,7 +69,7 @@ impl<'a> MarkdownCursor<'a> {
         let node = self.block_cursor.node();
         match node.kind() {
             "inline" | "pipe_table_cell" => {
-                if let Some(inline_tree) = self.markdown_tree.inline_tree(&node) {
+                if let Some(inline_tree) = self.quarkdown_tree.inline_tree(&node) {
                     self.inline_cursor = Some(inline_tree.walk());
                     return true;
                 }
@@ -180,15 +180,15 @@ impl<'a> MarkdownCursor<'a> {
     }
 }
 
-/// An object that holds a combined markdown tree.
+/// An object that holds a combined quarkdown tree.
 #[derive(Debug, Clone)]
-pub struct MarkdownTree {
+pub struct QuarkdownTree {
     block_tree: Tree,
     inline_trees: Vec<Tree>,
     inline_indices: HashMap<usize, usize>,
 }
 
-impl MarkdownTree {
+impl QuarkdownTree {
     /// Edit the block tree and inline trees to keep them in sync with source code that has been
     /// edited.
     ///
@@ -220,22 +220,22 @@ impl MarkdownTree {
         &self.inline_trees
     }
 
-    /// Create a new [`MarkdownCursor`] starting from the root of the tree.
-    pub fn walk(&self) -> MarkdownCursor {
-        MarkdownCursor {
-            markdown_tree: self,
+    /// Create a new [`QuarkdownCursor`] starting from the root of the tree.
+    pub fn walk(&self) -> QuarkdownCursor {
+        QuarkdownCursor {
+            quarkdown_tree: self,
             block_cursor: self.block_tree.walk(),
             inline_cursor: None,
         }
     }
 }
 
-impl Default for MarkdownParser {
+impl Default for QuarkdownParser {
     fn default() -> Self {
         let block_language = LANGUAGE.into();
         let inline_language = INLINE_LANGUAGE.into();
         let parser = Parser::new();
-        MarkdownParser {
+        QuarkdownParser {
             parser,
             block_language,
             inline_language,
@@ -243,7 +243,7 @@ impl Default for MarkdownParser {
     }
 }
 
-impl MarkdownParser {
+impl QuarkdownParser {
     /// Parse a slice of UTF8 text.
     ///
     /// # Arguments:
@@ -251,17 +251,17 @@ impl MarkdownParser {
     /// * `old_tree` A previous syntax tree parsed from the same document.
     ///   If the text of the document has changed since `old_tree` was
     ///   created, then you must edit `old_tree` to match the new text using
-    ///   [MarkdownTree::edit].
+    ///   [QuarkdownTree::edit].
     ///
-    /// Returns a [MarkdownTree] if parsing succeeded, or `None` if:
+    /// Returns a [QuarkdownTree] if parsing succeeded, or `None` if:
     ///  * The timeout set with [tree_sitter::Parser::set_timeout_micros] expired
     ///  * The cancellation flag set with [tree_sitter::Parser::set_cancellation_flag] was flipped
     pub fn parse_with<T: AsRef<[u8]>, F: FnMut(usize, Point) -> T>(
         &mut self,
         callback: &mut F,
-        old_tree: Option<&MarkdownTree>,
-    ) -> Option<MarkdownTree> {
-        let MarkdownParser {
+        old_tree: Option<&QuarkdownTree>,
+    ) -> Option<QuarkdownTree> {
+        let QuarkdownParser {
             parser,
             block_language,
             inline_language,
@@ -333,7 +333,7 @@ impl MarkdownParser {
         drop(tree_cursor);
         inline_trees.shrink_to_fit();
         inline_indices.shrink_to_fit();
-        Some(MarkdownTree {
+        Some(QuarkdownTree {
             block_tree,
             inline_trees,
             inline_indices,
@@ -347,12 +347,12 @@ impl MarkdownParser {
     /// * `old_tree` A previous syntax tree parsed from the same document.
     ///   If the text of the document has changed since `old_tree` was
     ///   created, then you must edit `old_tree` to match the new text using
-    ///   [MarkdownTree::edit].
+    ///   [QuarkdownTree::edit].
     ///
-    /// Returns a [MarkdownTree] if parsing succeeded, or `None` if:
+    /// Returns a [QuarkdownTree] if parsing succeeded, or `None` if:
     ///  * The timeout set with [tree_sitter::Parser::set_timeout_micros] expired
     ///  * The cancellation flag set with [tree_sitter::Parser::set_cancellation_flag] was flipped
-    pub fn parse(&mut self, text: &[u8], old_tree: Option<&MarkdownTree>) -> Option<MarkdownTree> {
+    pub fn parse(&mut self, text: &[u8], old_tree: Option<&QuarkdownTree>) -> Option<QuarkdownTree> {
         self.parse_with(&mut |byte, _| &text[byte..], old_tree)
     }
 }
@@ -366,7 +366,7 @@ mod tests {
     #[test]
     fn inline_ranges() {
         let code = "# title\n\nInline [content].\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = QuarkdownParser::default();
         let mut tree = parser.parse(code.as_bytes(), None).unwrap();
 
         let section = tree.block_tree().root_node().child(0).unwrap();
@@ -418,9 +418,9 @@ mod tests {
     }
 
     #[test]
-    fn markdown_cursor() {
+    fn quarkdown_cursor() {
         let code = "# title\n\nInline [content].\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = QuarkdownParser::default();
         let tree = parser.parse(code.as_bytes(), None).unwrap();
         let mut cursor = tree.walk();
         assert_eq!(cursor.node().kind(), "document");
@@ -444,7 +444,7 @@ mod tests {
     #[test]
     fn table() {
         let code = "| foo |\n| --- |\n| *bar*|\n";
-        let mut parser = MarkdownParser::default();
+        let mut parser = QuarkdownParser::default();
         let tree = parser.parse(code.as_bytes(), None).unwrap();
         dbg!(&tree.inline_trees());
         let mut cursor = tree.walk();

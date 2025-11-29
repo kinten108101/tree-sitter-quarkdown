@@ -8,11 +8,11 @@ from wheel.bdist_wheel import bdist_wheel
 
 class Build(build):
     def run(self):
-        if (block_queries := Path("tree-sitter-markdown", "queries")).is_dir():
-            dest = Path(self.build_lib, "tree_sitter_markdown", "queries", "markdown")
+        if (block_queries := Path("tree-sitter-quarkdown", "queries")).is_dir():
+            dest = Path(self.build_lib, "tree_sitter_quarkdown", "queries", "quarkdown")
             self.copy_tree(str(block_queries), str(dest))
-        if (inline_queries := Path("tree-sitter-markdown-inline", "queries")).is_dir():
-            dest = Path(self.build_lib, "tree_sitter_markdown", "queries", "markdown_inline")
+        if (inline_queries := Path("tree-sitter-quarkdown-inline", "queries")).is_dir():
+            dest = Path(self.build_lib, "tree_sitter_quarkdown", "queries", "quarkdown_inline")
             self.copy_tree(str(inline_queries), str(dest))
         super().run()
 
@@ -29,19 +29,19 @@ setup(
     packages=find_packages("bindings/python"),
     package_dir={"": "bindings/python"},
     package_data={
-        "tree_sitter_markdown": ["*.pyi", "py.typed"],
-        "tree_sitter_markdown.queries": ["*.scm"],
+        "tree_sitter_quarkdown": ["*.pyi", "py.typed"],
+        "tree_sitter_quarkdown.queries": ["*.scm"],
     },
-    ext_package="tree_sitter_markdown",
+    ext_package="tree_sitter_quarkdown",
     ext_modules=[
         Extension(
             name="_binding",
             sources=[
-                "bindings/python/tree_sitter_markdown/binding.c",
-                "tree-sitter-markdown/src/parser.c",
-                "tree-sitter-markdown/src/scanner.c",
-                "tree-sitter-markdown-inline/src/parser.c",
-                "tree-sitter-markdown-inline/src/scanner.c",
+                "bindings/python/tree_sitter_quarkdown/binding.c",
+                "tree-sitter-quarkdown/src/parser.c",
+                "tree-sitter-quarkdown/src/scanner.c",
+                "tree-sitter-quarkdown-inline/src/parser.c",
+                "tree-sitter-quarkdown-inline/src/scanner.c",
             ],
             extra_compile_args=(
                 ["-std=c11"] if system() != "Windows" else []
@@ -50,7 +50,7 @@ setup(
                 ("Py_LIMITED_API", "0x03090000"),
                 ("PY_SSIZE_T_CLEAN", None)
             ],
-            include_dirs=["tree-sitter-markdown/src"],
+            include_dirs=["tree-sitter-quarkdown/src"],
             py_limited_api=True,
         )
     ],

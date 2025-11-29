@@ -1,5 +1,5 @@
 all install uninstall clean:
-	$(MAKE) -C tree-sitter-markdown $@
-	$(MAKE) -C tree-sitter-markdown-inline $@
+	$(MAKE) -C tree-sitter-quarkdown $@
+	$(MAKE) -C tree-sitter-quarkdown-inline $@
 
 .PHONY: all install uninstall clean

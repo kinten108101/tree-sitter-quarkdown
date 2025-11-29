@@ -1,8 +1,8 @@
 {
-  "name": "@tree-sitter-grammars/tree-sitter-markdown",
+  "name": "@kinten108101/tree-sitter-quarkdown",
   "version": "0.5.1",
-  "description": "Markdown grammar for tree-sitter",
-  "repository": "github:tree-sitter-grammars/tree-sitter-markdown",
+  "description": "Quarkdown grammar for tree-sitter",
+  "repository": "github:kinten108101/tree-sitter-quarkdown",
   "license": "MIT",
   "main": "bindings/node",
   "types": "bindings/node",
@@ -13,7 +13,7 @@
     "incremental",
     "parsing",
     "tree-sitter",
-    "markdown"
+    "quarkdown"
   ],
   "files": [
     "binding.gyp",

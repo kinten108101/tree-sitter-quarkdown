@@ -1,14 +1,14 @@
 cmake_minimum_required(VERSION 3.13)
 
-project(tree-sitter-markdown
+project(tree-sitter-quarkdown
         VERSION "0.5.1"
-        DESCRIPTION "Markdown grammar for tree-sitter"
-        HOMEPAGE_URL "https://github.com/tree-sitter-grammars/tree-sitter-markdown"
+        DESCRIPTION "Quarkdown grammar for tree-sitter"
+        HOMEPAGE_URL "https://github.com/tree-sitter-grammars/tree-sitter-quarkdown"
         LANGUAGES C)
 
 option(BUILD_SHARED_LIBS "Build using shared libraries" ON)
 option(TREE_SITTER_REUSE_ALLOCATOR "Reuse the library allocator" OFF)
-option(ALL_EXTENSIONS "Enable all Markdown extensions" OFF)
+option(ALL_EXTENSIONS "Enable all Quarkdown extensions" OFF)
 
 set(TREE_SITTER_ABI_VERSION 14 CACHE STRING "Tree-sitter ABI version")
 if(NOT ${TREE_SITTER_ABI_VERSION} MATCHES "^[0-9]+$")
@@ -60,6 +60,6 @@ macro(add_parser name)
             LIBRARY DESTINATION "${CMAKE_INSTALL_LIBDIR}")
 endmacro()
 
-add_subdirectory(tree-sitter-markdown tree-sitter-markdown)
+add_subdirectory(tree-sitter-quarkdown tree-sitter-quarkdown)
 
-add_subdirectory(tree-sitter-markdown-inline tree-sitter-markdown-inline)
+add_subdirectory(tree-sitter-quarkdown-inline tree-sitter-quarkdown-inline)

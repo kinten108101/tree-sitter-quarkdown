@@ -3,7 +3,7 @@
 const { execSync } = require("child_process");
 const { join } = require("path");
 
-const parsers = ["tree-sitter-markdown", "tree-sitter-markdown-inline"];
+const parsers = ["tree-sitter-quarkdown", "tree-sitter-quarkdown-inline"];
 
 for (const dir of parsers) {
   console.log(`testing ${dir}`);
