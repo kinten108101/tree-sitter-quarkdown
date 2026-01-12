@@ -38,7 +38,7 @@ module.exports = grammar({
             alias($._setext_heading2, $.setext_heading),
             $.qcmd,
             $.paragraph,
-            $.indented_code_block,
+            // $.indented_code_block,
             $.block_quote,
             $.thematic_break,
             $.list,
@@ -179,7 +179,7 @@ module.exports = grammar({
         // lines. The indented chunks are handeled by the external scanner.
         //
         // https://github.github.com/gfm/#indented-code-blocks
-        indented_code_block: $ => prec.right(seq($._indented_chunk, repeat(choice($._indented_chunk, $._blank_line)))),
+        // indented_code_block: $ => prec.right(seq($._indented_chunk, repeat(choice($._indented_chunk, $._blank_line)))),
         _indented_chunk: $ => seq($._indented_chunk_start, repeat(choice($._line, $._newline)), $._block_close, optional($.block_continuation)),
 
         // A fenced code block. Fenced code blocks are mainly handled by the external scanner. In
@@ -611,7 +611,7 @@ module.exports = grammar({
     precedences: $ => [
         [$._setext_heading1, $._block],
         [$._setext_heading2, $._block],
-        [$.indented_code_block, $._block],
+        // [$.indented_code_block, $._block],
     ],
     conflicts: $ => [
         [$.link_reference_definition],

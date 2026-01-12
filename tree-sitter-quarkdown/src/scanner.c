@@ -336,18 +336,6 @@ static size_t advance(Scanner *s, TSLexer *lexer) {
 static bool match(Scanner *s, TSLexer *lexer, Block block) {
     switch (block) {
         case INDENTED_CODE_BLOCK:
-            while (s->indentation < 4) {
-                if (lexer->lookahead == ' ' || lexer->lookahead == '\t') {
-                    s->indentation += advance(s, lexer);
-                } else {
-                    break;
-                }
-            }
-            if (s->indentation >= 4 && lexer->lookahead != '\n' &&
-                lexer->lookahead != '\r') {
-                s->indentation -= 4;
-                return true;
-            }
             break;
         case LIST_ITEM:
         case LIST_ITEM_1_INDENTATION:
