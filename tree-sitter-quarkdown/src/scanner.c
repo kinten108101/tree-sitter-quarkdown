@@ -609,7 +609,7 @@ static bool parse_atx_heading(Scanner *s, TSLexer *lexer,
 
 static bool parse_qcmd(Scanner *s, TSLexer *lexer,
                               const bool *valid_symbols) {
-    if (valid_symbols[QCMD_MARKER] && s->indentation == 0) {
+    if (valid_symbols[QCMD_MARKER]) {
         mark_end(s, lexer);
         advance(s, lexer);
         if (
